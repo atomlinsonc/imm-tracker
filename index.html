@@ -1,0 +1,745 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>IMM Regulatory Tracker: public snapshot</title>
+<style>
+@font-face { font-family: "Open Sans"; font-weight: 400; src: url(fonts/open-sans-latin-400-normal.woff2) format("woff2"); }
+@font-face { font-family: "Open Sans"; font-weight: 600; src: url(fonts/open-sans-latin-600-normal.woff2) format("woff2"); }
+@font-face { font-family: "Open Sans"; font-weight: 700; src: url(fonts/open-sans-latin-700-normal.woff2) format("woff2"); }
+@font-face { font-family: "Source Serif Pro"; font-weight: 400; src: url(fonts/source-serif-pro-latin-400-normal.woff2) format("woff2"); }
+@font-face { font-family: "Source Serif Pro"; font-weight: 600; src: url(fonts/source-serif-pro-latin-600-normal.woff2) format("woff2"); }
+:root { --text: #464a52; --indigo: #3b3361; --blue: #116cb6; --slate: #7282a9; --slate-dark: #4e6191; --panel: #f1f3f6; --page: #f4f5f6;
+        --line: #d4d6da; --line-soft: #e1e6ee; --navy: #0b2239; --warn: #9a3b3b; }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--page); color: var(--text); font: 14px/20px "Open Sans", Arial, sans-serif; }
+a { color: var(--blue); } a:hover { color: var(--slate); text-decoration: none; }
+h1, h2 { font-family: "Source Serif Pro", Georgia, serif; font-weight: 400; margin: 0; }
+h1 { color: var(--indigo); font-size: 28px; line-height: 34px; }
+h2 { color: var(--blue); font-size: 20px; line-height: 26px; margin: 30px 0 4px; scroll-margin-top: 12px; }
+header { background: var(--navy); color: #fff; }
+header .in { max-width: 1320px; margin: 0 auto; padding: 16px 20px 0; display: flex; align-items: flex-end; gap: 28px; flex-wrap: wrap; }
+header .brand { font: 600 20px/26px "Source Serif Pro", Georgia, serif; margin-bottom: 12px; white-space: nowrap; }
+header .brand span { font-weight: 400; font-size: 14px; color: #cfd6e4; margin-left: 8px; }
+nav { flex: 1; display: flex; gap: 2px; flex-wrap: wrap; border-bottom: 1px solid rgba(255,255,255,.55); }
+nav a { color: #fff; text-decoration: none; font-weight: 600; font-size: 12.5px; letter-spacing: .6px; text-transform: uppercase; padding: 9px 11px 8px; border-bottom: 3px solid transparent; }
+nav a:hover { border-bottom-color: #fff; color: #fff; }
+main { max-width: 1320px; margin: 0 auto; padding: 20px 20px 50px; }
+.intro { color: var(--slate-dark); margin: 4px 0 12px; max-width: 980px; }
+.note { font-size: 12.5px; line-height: 18px; color: #6a707b; margin: 2px 0 8px; max-width: 980px; }
+.flash { background: #fff; border: 1px solid var(--warn); border-left-width: 4px; color: var(--warn); font-weight: 600; padding: 8px 12px; margin-bottom: 14px; }
+.tiles { display: flex; gap: 10px; flex-wrap: wrap; margin: 14px 0 6px; }
+.tile { background: #fff; border: 1px solid var(--line); padding: 9px 14px 8px; min-width: 150px; }
+.tile b { display: block; font: 400 24px/28px "Source Serif Pro", Georgia, serif; color: var(--indigo); }
+.tile span { font-size: 12px; color: var(--slate-dark); }
+.wrap { overflow-x: auto; background: #fff; border: 1px solid var(--line); }
+table { border-collapse: collapse; width: 100%; font-size: 13px; line-height: 18px; }
+th { background: var(--slate); color: #fff; font-weight: 600; text-align: left; padding: 6px 8px; white-space: nowrap; }
+td { padding: 6px 8px; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+tbody tr:nth-child(even) td { background: #f8f9fb; }
+td.id { white-space: nowrap; font-weight: 600; } td.nowrap { white-space: nowrap; } td.num, th.num { text-align: right; }
+.small { font-size: 12px; line-height: 17px; } .muted { color: #7b808a; }
+.rel { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; padding: 0 6px; border: 1px solid var(--slate); color: var(--slate-dark); }
+.rel.high { background: var(--indigo); border-color: var(--indigo); color: #fff; } .rel.medium { background: var(--slate); color: #fff; }
+.tag { display: inline-block; font-size: 11px; padding: 0 6px; border: 1px solid var(--line); background: var(--panel); margin-right: 3px; white-space: nowrap; }
+.tag.imm { border-color: var(--blue); color: #005396; background: #fff; font-weight: 600; }
+.tools { display: flex; gap: 10px; align-items: center; margin: 8px 0; flex-wrap: wrap; }
+.tools input[type=text] { font: inherit; padding: 5px 8px; border: 1px solid var(--line); width: 280px; max-width: 100%; }
+.tools label { font-size: 13px; }
+ol.steps { margin: 6px 0 10px 18px; padding: 0; max-width: 980px; }
+footer { max-width: 1320px; margin: 0 auto; padding: 0 20px 40px; font-size: 12.5px; line-height: 18px; color: #6a707b; }
+@media (max-width: 700px) { .hide-s { display: none; } h1 { font-size: 23px; line-height: 29px; } }
+</style>
+</head>
+<body data-updated="2026-11-11T14:54:02Z">
+<header><div class="in">
+  <div class="brand">IMM Regulatory Tracker<span>public snapshot</span></div>
+  <nav><a href="#open">Open items</a><a href="#deadlines">Deadlines</a><a href="#meetings">Meetings</a><a href="#changes">Changes</a><a href="#record">IMM record</a><a href="#ranking">Ranking</a><a href="#sources">Sources</a></nav>
+</div></header>
+<main>
+<div id="stale" class="flash" hidden></div>
+<h1>Open matters at ERCOT, the PUC and the Texas Legislature</h1>
+<p class="intro">Updated November 11, 2026, 8:54 am Central. An automated daily reading of public records, ranked by how closely each item matches matters on which the ERCOT Independent Market Monitor has publicly commented or taken a position.</p>
+<p class="note">Unofficial. This page is not a publication of the Independent Market Monitor or of Potomac Economics and does not state their views. Every row links to its public source; check the source before relying on anything here.</p>
+<div class="tiles">
+  <div class="tile"><b>16,013</b><span>public items tracked</span></div>
+  <div class="tile"><b>23</b><span>open items ranked high</span></div>
+  <div class="tile"><b>31</b><span>open items ranked medium</span></div>
+  <div class="tile"><b>24</b><span>dates on listed items, next 60 days</span></div>
+  <div class="tile"><b>35 of 35</b><span>completeness checks passed</span></div>
+</div>
+
+<h2 id="open">Open items ranked high or medium</h2>
+<p class="note">Open means still pending at the source or active since October 31, 2026. Sorted by rank, then nearest date, then score. Items ranked low (15,933) are tracked but not listed.</p>
+<div class="tools"><input type="text" id="q" placeholder="Filter by word, ID or body" aria-label="Filter the list">
+  <label><input type="checkbox" id="onlyhigh"> High only</label><span class="small muted" id="shown"></span></div>
+<div class="wrap"><table id="items"><thead><tr><th>Rank</th><th>ID</th><th>Item</th><th class="hide-s">Status at the source</th><th>Next date</th><th class="hide-s">Why it ranks here</th></tr></thead><tbody>
+<tr data-rank="high">
+  <td><span class="rel high">high</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">97</div></td>
+  <td class="id"><a href="https://www.ercot.com/mktrules/issues/NOGRR288" rel="noopener">NOGRR288</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Related to NPRR1340, Dispatchable Reliability Reserve Service Ancillary Service with Energy Storage Resource Participation<div class="small"></div></td>
+  <td class="small hide-s">Pending<div class="muted">TAC / TAC for consideration</div></td>
+  <td class="nowrap">Nov 18, 2026</td>
+  <td class="small hide-s">matches ancillary, reliability reserve, dispatchable reliability, ancillary service; closest: NOGRR283 (the IMM supported it, 2025)</td></tr>
+<tr data-rank="high">
+  <td><span class="rel high">high</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">93</div></td>
+  <td class="id"><a href="https://www.ercot.com/mktrules/issues/NOGRR284" rel="noopener">NOGRR284</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Related to NPRR1310, Dispatchable Reliability Reserve Service Plus Energy Storage Resource Participation and Release Factor<div class="small"></div></td>
+  <td class="small hide-s">Pending<div class="muted">ROS / ROS for consideration</div></td>
+  <td class="nowrap">Dec 3, 2026</td>
+  <td class="small hide-s">matches reliability reserve, dispatchable reliability, reliability, dispatchable; closest: NOGRR283 (the IMM supported it, 2025)</td></tr>
+<tr data-rank="high">
+  <td><span class="rel high">high</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">84</div></td>
+  <td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=59997&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 59997</a><div class="small muted" style="font-weight:400">PUC project</div></td>
+  <td>Treatment of DRRS and Other Future Ancillary Services Costs in Existing Fixed-Rate Retail Contracts<div class="small"></div></td>
+  <td class="small hide-s"></td>
+  <td class="nowrap">Dec 4, 2026</td>
+  <td class="small hide-s">matches ancillary, ancillary service, PUC category rule project, drrs; closest: PUC 55845 (the IMM filed comments, 2023)</td></tr>
+<tr data-rank="high">
+  <td><span class="rel high">high</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">88</div></td>
+  <td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1345" rel="noopener">NPRR1345</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Extend NPRR1279 Sunset Date for Exceptional Fuel Cost Process<div class="small"><span class="tag imm">IMM supports</span></div></td>
+  <td class="small hide-s">Pending<div class="muted">BOARD / Revision Request Consideration</div></td>
+  <td class="nowrap">Dec 7, 2026</td>
+  <td class="small hide-s">The IMM stated a position: supports</td></tr>
+<tr data-rank="high">
+  <td><span class="rel high">high</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">87</div></td>
+  <td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1353" rel="noopener">NPRR1353</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>SCED Constraint Data and Shift Factor Reports<div class="small"><span class="tag">Posted this week</span></div></td>
+  <td class="small hide-s">Pending<div class="muted">PRS / Language Consideration</div></td>
+  <td class="nowrap">Dec 9, 2026</td>
+  <td class="small hide-s">matches market, sced, constraint, ercot; closest: OBDRR026 (the IMM sponsored it, 2021)</td></tr>
+<tr data-rank="high">
+  <td><span class="rel high">high</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">38</div></td>
+  <td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=58484&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 58484</a><div class="small muted" style="font-weight:400">PUC project</div></td>
+  <td>EVALUATION OF TRANSMISSION COST RECOVERY<div class="small"><span class="tag imm">IMM filed</span></div></td>
+  <td class="small hide-s"></td>
+  <td class="nowrap">Dec 31, 2026</td>
+  <td class="small hide-s">The IMM filed in this control number</td></tr>
+<tr data-rank="high">
+  <td><span class="rel high">high</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">99</div></td>
+  <td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1255" rel="noopener">NPRR1255</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Introduction of Mitigation of ESRs<div class="small"></div></td>
+  <td class="small hide-s">Pending<div class="muted">PRS / Language Consideration</div></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">matches offer, economic, cap, offer cap; closest: NPRR1330 (the IMM supported it, 2026)</td></tr>
+<tr data-rank="high">
+  <td><span class="rel high">high</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">99</div></td>
+  <td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1310" rel="noopener">NPRR1310</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Dispatchable Reliability Reserve Service Plus Energy Storage Resource Participation and Release Factor<div class="small"><span class="tag imm">IMM commented</span></div></td>
+  <td class="small hide-s">Pending<div class="muted">PRS / PRS for consideration</div></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">The IMM filed comments here</td></tr>
+<tr data-rank="high">
+  <td><span class="rel high">high</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">99</div></td>
+  <td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1340" rel="noopener">NPRR1340</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Dispatchable Reliability Reserve Service Ancillary Service with Energy Storage Resource Participation<div class="small"></div></td>
+  <td class="small hide-s">Pending<div class="muted">PRS / PRS for Impact Analysis consideration</div></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">matches ancillary, reliability reserve, dispatchable reliability, ancillary service; closest: NPRR1310 (the IMM filed comments, 2025)</td></tr>
+<tr data-rank="high">
+  <td><span class="rel high">high</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">99</div></td>
+  <td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=58777&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 58777</a><div class="small muted" style="font-weight:400">PUC docket</div></td>
+  <td>Triennial Reliability Assessment for the ERCOT Region under §25.508<div class="small"><span class="tag imm">IMM filed</span></div></td>
+  <td class="small hide-s"></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">The IMM filed in this control number</td></tr>
+<tr data-rank="high">
+  <td><span class="rel high">high</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">95</div></td>
+  <td class="id"><a href="https://capitol.texas.gov/BillLookup/History.aspx?LegSess=90R&amp;Bill=SB191" rel="noopener">90R SB 191</a><div class="small muted" style="font-weight:400">Legislature bill</div></td>
+  <td>Relating to the interconnection of a facility in the ERCOT power region to certain other facilities.<div class="small"><span class="tag">Posted this week</span></div></td>
+  <td class="small hide-s">11/09/2026 S Filed</td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">closer to the IMM&#39;s record than 95% of electric bills; matches ercot, region, reliability, facility; closest: PUC 55999 (the IMM filed comments, 2026)</td></tr>
+<tr data-rank="high">
+  <td><span class="rel high">high</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">95</div></td>
+  <td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1348" rel="noopener">NPRR1348</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Telemetry Offsetting for Provisional Controllable Load Resources<div class="small"></div></td>
+  <td class="small hide-s">Pending<div class="muted">PRS / PRS for consideration</div></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">matches economic, market, telemetry, real-time; closest: NPRR1182 (the IMM supported it, 2023)</td></tr>
+<tr data-rank="high">
+  <td><span class="rel high">high</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">94</div></td>
+  <td class="id"><a href="https://capitol.texas.gov/BillLookup/History.aspx?LegSess=90R&amp;Bill=HB867" rel="noopener">90R HB 867</a><div class="small muted" style="font-weight:400">Legislature bill</div></td>
+  <td>Relating to the interconnection and market participation of electric vehicles in the ERCOT power region.<div class="small"><span class="tag">Posted this week</span></div></td>
+  <td class="small hide-s">11/09/2026 H Filed</td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">closer to the IMM&#39;s record than 94% of electric bills; matches ercot, market, region; closest: PUC 58379 (the IMM filed comments, 2025)</td></tr>
+<tr data-rank="high">
+  <td><span class="rel high">high</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">90</div></td>
+  <td class="id"><a href="https://capitol.texas.gov/BillLookup/History.aspx?LegSess=90R&amp;Bill=SB35" rel="noopener">90R SB 35</a><div class="small muted" style="font-weight:400">Legislature bill</div></td>
+  <td>Relating to the sharing of information related to large load customers by the independent organization certified for the ERCOT power region with the Texas Water Development Board.<div class="small"><span class="tag">Posted this week</span></div></td>
+  <td class="small hide-s">11/09/2026 S Filed</td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">closer to the IMM&#39;s record than 90% of electric bills; matches ercot, independent, region, independent organization; closest: PUC 54445 (the IMM filed comments, 2026)</td></tr>
+<tr data-rank="high">
+  <td><span class="rel high">high</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">88</div></td>
+  <td class="id"><a href="https://capitol.texas.gov/BillLookup/History.aspx?LegSess=90R&amp;Bill=HB730" rel="noopener">90R HB 730</a><div class="small muted" style="font-weight:400">Legislature bill</div></td>
+  <td>Relating to the interconnection of large load customers and the recovery of costs of generation facilities serving large load customers by electric utilities operating outside of the ERCOT power region.<div class="small"><span class="tag">Posted this week</span></div></td>
+  <td class="small hide-s">11/09/2026 H Filed</td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">closer to the IMM&#39;s record than 88% of electric bills; matches ercot, region, cost, serving; closest: PUC 58482 (the IMM filed comments, 2026)</td></tr>
+<tr data-rank="high">
+  <td><span class="rel high">high</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">87</div></td>
+  <td class="id"><a href="https://capitol.texas.gov/BillLookup/History.aspx?LegSess=90R&amp;Bill=SB320" rel="noopener">90R SB 320</a><div class="small muted" style="font-weight:400">Legislature bill</div></td>
+  <td>Relating to power duration requirements in emergency contingency plans adopted by end stage renal disease facilities.<div class="small"><span class="tag">Posted this week</span></div></td>
+  <td class="small hide-s">11/10/2026 S Filed</td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">closer to the IMM&#39;s record than 87% of electric bills; matches adopted, disaster, duration, emergency; closest: NPRR1282 (the IMM filed comments, 2025)</td></tr>
+<tr data-rank="high">
+  <td><span class="rel high">high</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">75</div></td>
+  <td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=52691&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 52691</a><div class="small muted" style="font-weight:400">PUC project</div></td>
+  <td>PROJECT FOR ERCOT WEATHER STUDY TO IMPLEMENT RELIABILITY STANDARDS UNDER PURA 35.0021 AND 38.075<div class="small"></div></td>
+  <td class="small hide-s"></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">matches ercot, reliability, study, weather; closest: PUC 54584 (the IMM filed comments, 2023)</td></tr>
+<tr data-rank="high">
+  <td><span class="rel high">high</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">74</div></td>
+  <td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1278" rel="noopener">NPRR1278</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Establishing Advanced Grid Support Service as an Ancillary Service<div class="small"><span class="tag imm">IMM commented</span></div></td>
+  <td class="small hide-s">Pending<div class="muted">PRS / PRS for consideration</div></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">The IMM filed comments here</td></tr>
+<tr data-rank="high">
+  <td><span class="rel high">high</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">50</div></td>
+  <td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1296" rel="noopener">NPRR1296</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Residential Demand Response Program<div class="small"><span class="tag imm">IMM commented</span></div></td>
+  <td class="small hide-s">Pending<div class="muted">PRS / PRS for consideration</div></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">The IMM filed comments here</td></tr>
+<tr data-rank="high">
+  <td><span class="rel high">high</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">45</div></td>
+  <td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1343" rel="noopener">NPRR1343</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Introduction of PTP Obligation Bid Fee in DAM<div class="small"><span class="tag imm">IMM commented</span></div></td>
+  <td class="small hide-s">Pending<div class="muted">PRS / Impact Analysis Consideration</div></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">The IMM filed comments here</td></tr>
+<tr data-rank="high">
+  <td><span class="rel high">high</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">22</div></td>
+  <td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=54445&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 54445</a><div class="small muted" style="font-weight:400">PUC docket</div></td>
+  <td>Review of Protocols Adopted by the Independent Organization<div class="small"><span class="tag imm">IMM filed</span></div></td>
+  <td class="small hide-s"></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">The IMM filed in this control number</td></tr>
+<tr data-rank="high">
+  <td><span class="rel high">high</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">6</div></td>
+  <td class="id"><a href="https://www.house.texas.gov/pdfs/speaker/F-Interim-Charges-3.25.pdf" rel="noopener">F-Interim-Charges-3.25.pdf</a><div class="small muted" style="font-weight:400">Legislature interim charges</div></td>
+  <td>House interim charges: F Interim Charges 3.25<div class="small"></div></td>
+  <td class="small hide-s"></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">matches charge; closest: NPRR1204 (the IMM supported it, 2023)</td></tr>
+<tr data-rank="high">
+  <td><span class="rel high">high</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">4</div></td>
+  <td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=55999&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 55999</a><div class="small muted" style="font-weight:400">PUC docket</div></td>
+  <td>REPORTS OF THE ELECTRIC RELIABILITY COUNCIL OF TEXAS<div class="small"><span class="tag imm">IMM filed</span></div></td>
+  <td class="small hide-s"></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">The IMM filed in this control number</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">60</div></td>
+  <td class="id"><a href="https://www.ercot.com/mktrules/issues/PGRR122" rel="noopener">PGRR122</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Reliability Performance Criteria for Loss of Load<div class="small"></div></td>
+  <td class="small hide-s">Pending<div class="muted">TAC / TAC for consideration</div></td>
+  <td class="nowrap">Nov 18, 2026</td>
+  <td class="small hide-s">matches performance, reliability, load, strategic; closest: PGRR113 (the IMM supported it, 2023)</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">52</div></td>
+  <td class="id"><a href="https://www.ercot.com/mktrules/issues/PGRR142" rel="noopener">PGRR142</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>In-kind Definition for Generation<div class="small"></div></td>
+  <td class="small hide-s">Pending<div class="muted">ROS / Language Consideration</div></td>
+  <td class="nowrap">Dec 3, 2026</td>
+  <td class="small hide-s">matches ercot, strategic, strategic plan, plan objective; closest: NPRR1301 (the IMM filed comments, 2025)</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">17</div></td>
+  <td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=59999&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 59999</a><div class="small muted" style="font-weight:400">PUC project</div></td>
+  <td>Rulemaking to Adopt a Standard Large Load Interconnection Agreement<div class="small"></div></td>
+  <td class="small hide-s"></td>
+  <td class="nowrap">Dec 14, 2026</td>
+  <td class="small hide-s">matches PUC category rule project, rulemaking, load, large load; closest: PUC 58482 (the IMM filed comments, 2026)</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">99</div></td>
+  <td class="id"><a href="https://www.ercot.com/services/comm/mkt_notices/M-C111026-01" rel="noopener">M-C111026-01</a><div class="small muted" style="font-weight:400">ERCOT notice</div></td>
+  <td>M-C111026-01 Requirement to submit heat rates by the Firm Fuel Supply Service (FFSS) offer submission deadline<div class="small"><span class="tag">Posted this week</span></div></td>
+  <td class="small hide-s"></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">closer to the IMM&#39;s record than 99% of notices; matches offer, fuel supply, supply service, firm fuel; closest: PUC 58434 (the IMM filed comments, 2026)</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">98</div></td>
+  <td class="id"><a href="https://www.ercot.com/services/comm/mkt_notices/M-C110626-01" rel="noopener">M-C110626-01</a><div class="small muted" style="font-weight:400">ERCOT notice</div></td>
+  <td>M-C110626-01 Implementation Details of NPRR1335, Implementation of PUCT Changes to Firm Fuel Supply Service for Phase 3<div class="small"><span class="tag">Posted this week</span></div></td>
+  <td class="small hide-s"></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">closer to the IMM&#39;s record than 98% of notices; matches fuel supply, supply service, firm fuel, supply; closest: PUC 58434 (the IMM filed comments, 2026)</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">90</div></td>
+  <td class="id"><a href="https://www.ercot.com/news/release/11102026-ercot-launches-enhanced" rel="noopener">11102026-ercot-launches-enhanced</a><div class="small muted" style="font-weight:400">ERCOT news release</div></td>
+  <td>ERCOT Launches Enhanced Grid Notification System<div class="small"><span class="tag">Posted this week</span></div></td>
+  <td class="small hide-s"></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">closer to the IMM&#39;s record than 90% of notices; matches ercot, notification, grid; closest: NPRR1181 (the IMM supported it, 2023)</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">87</div></td>
+  <td class="id"><a href="https://www.ercot.com/services/comm/mkt_notices/M-A110626-01" rel="noopener">M-A110626-01</a><div class="small muted" style="font-weight:400">ERCOT notice</div></td>
+  <td>M-A110626-01 ERCOT to Expand Texas Advisory and Notification System; Migrate Current Email Subscribers to New Platform<div class="small"><span class="tag">Posted this week</span></div></td>
+  <td class="small hide-s"></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">closer to the IMM&#39;s record than 87% of notices; matches ercot, current, expand, notification</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">85</div></td>
+  <td class="id"><a href="https://www.ercot.com/services/comm/mkt_notices/M-B110626-01" rel="noopener">M-B110626-01</a><div class="small muted" style="font-weight:400">ERCOT notice</div></td>
+  <td>M-B110626-01 Save the Date for the 2027 ERCOT Innovation Summit<div class="small"><span class="tag">Posted this week</span></div></td>
+  <td class="small hide-s"></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">closer to the IMM&#39;s record than 85% of notices; matches ercot, date, date ercot; closest: NPRR1166 (the IMM supported it, 2023)</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">84</div></td>
+  <td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1352" rel="noopener">NPRR1352</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>QSE Receipt and Payment of Weatherization Inspection Fee Invoices<div class="small"></div></td>
+  <td class="small hide-s">Pending<div class="muted">PRS / PRS for language consideration</div></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">matches ercot, fee, weatherization inspection, inspection fee; closest: NPRR1233 (the IMM supported it, 2024)</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">72</div></td>
+  <td class="id"><a href="https://capitol.texas.gov/BillLookup/History.aspx?LegSess=90R&amp;Bill=HB595" rel="noopener">90R HB 595</a><div class="small muted" style="font-weight:400">Legislature bill</div></td>
+  <td>Relating to a study and report on burying power lines in the Gulf Coast region.<div class="small"><span class="tag">Posted this week</span></div></td>
+  <td class="small hide-s">11/09/2026 H Filed</td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">closer to the IMM&#39;s record than 72% of electric bills; matches region, study, report; closest: PUC 54163 (the IMM filed comments, 2022)</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">72</div></td>
+  <td class="id"><a href="https://capitol.texas.gov/BillLookup/History.aspx?LegSess=90R&amp;Bill=HB601" rel="noopener">90R HB 601</a><div class="small muted" style="font-weight:400">Legislature bill</div></td>
+  <td>Relating to a study and report on burying power lines in the Gulf Coast region.<div class="small"><span class="tag">Posted this week</span></div></td>
+  <td class="small hide-s">11/09/2026 H Filed</td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">closer to the IMM&#39;s record than 72% of electric bills; matches region, study, report; closest: PUC 54163 (the IMM filed comments, 2022)</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">58</div></td>
+  <td class="id"><a href="https://capitol.texas.gov/BillLookup/History.aspx?LegSess=90R&amp;Bill=HB812" rel="noopener">90R HB 812</a><div class="small muted" style="font-weight:400">Legislature bill</div></td>
+  <td>Relating to emergency generators or other power sources for nursing facilities and certain multiunit complexes; providing a civil penalty.<div class="small"><span class="tag">Posted this week</span></div></td>
+  <td class="small hide-s">11/09/2026 H Filed</td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">closer to the IMM&#39;s record than 58% of electric bills; matches disaster, emergency, facility, source</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">56</div></td>
+  <td class="id"><a href="https://capitol.texas.gov/BillLookup/History.aspx?LegSess=90R&amp;Bill=HB547" rel="noopener">90R HB 547</a><div class="small muted" style="font-weight:400">Legislature bill</div></td>
+  <td>Relating to county noise study requirements and site construction approval for facilities operated by certain large load electric customers, authorizing a fee.<div class="small"><span class="tag">Posted this week</span></div></td>
+  <td class="small hide-s">11/09/2026 H Filed</td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">closer to the IMM&#39;s record than 56% of electric bills; matches study, fee, load, large load; closest: PUC 58482 (the IMM filed comments, 2026)</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">56</div></td>
+  <td class="id"><a href="https://capitol.texas.gov/BillLookup/History.aspx?LegSess=90R&amp;Bill=HB589" rel="noopener">90R HB 589</a><div class="small muted" style="font-weight:400">Legislature bill</div></td>
+  <td>Relating to the provision of loans and grants from the Texas energy fund for certain electric generating facilities.<div class="small"><span class="tag">Posted this week</span></div></td>
+  <td class="small hide-s">11/09/2026 H Filed</td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">closer to the IMM&#39;s record than 56% of electric bills; matches electric generating, fund, generating, gas; closest: PUC 58198 (the IMM filed comments, 2026)</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">53</div></td>
+  <td class="id"><a href="https://capitol.texas.gov/BillLookup/History.aspx?LegSess=90R&amp;Bill=SB192" rel="noopener">90R SB 192</a><div class="small muted" style="font-weight:400">Legislature bill</div></td>
+  <td>Relating to the equipment used to dispense energy to electric vehicles, including the source of power for that equipment.<div class="small"><span class="tag">Posted this week</span></div></td>
+  <td class="small hide-s">11/09/2026 S Filed</td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">closer to the IMM&#39;s record than 53% of electric bills; matches used, including, source</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">52</div></td>
+  <td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=59288&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 59288</a><div class="small muted" style="font-weight:400">PUC project</div></td>
+  <td>REVIEW OF § 25.107<div class="small"></div></td>
+  <td class="small hide-s"></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">matches PUC category rule project, review; closest: PUC 55845 (the IMM filed comments, 2023)</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">49</div></td>
+  <td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1333" rel="noopener">NPRR1333</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Establish an Incentive Program for Advanced Grid Support<div class="small"></div></td>
+  <td class="small hide-s">Pending<div class="muted">PRS / Language Consideration</div></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">matches program, strategic, grid support, advanced grid; closest: NPRR1278 (the IMM filed comments, 2025)</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">49</div></td>
+  <td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=59142&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 59142</a><div class="small muted" style="font-weight:400">PUC docket</div></td>
+  <td>REVIEW OF ERCOT&#39;S INTERCONNECTION PROCESSES FOR LARGE LOADS<div class="small"></div></td>
+  <td class="small hide-s"></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">matches ercot, ercot interconnection, review, review ercot; closest: PUC 54163 (the IMM filed comments, 2022)</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">44</div></td>
+  <td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=56736&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 56736</a><div class="small muted" style="font-weight:400">PUC project</div></td>
+  <td>REVIEW OF § 25.88 RELATING TO RETAIL MARKET PERFORMANCE MEASURE REPORTING<div class="small"></div></td>
+  <td class="small hide-s"></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">matches market, performance, PUC category rule project, review; closest: PUC 49852 (the IMM filed comments, 2019)</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">28</div></td>
+  <td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=59431&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 59431</a><div class="small muted" style="font-weight:400">PUC project</div></td>
+  <td>DISTRIBUTION POLE MANAGEMENT AND INSPECTION PLANS<div class="small"></div></td>
+  <td class="small hide-s"></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">matches PUC category rule project, management, inspection, plan</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">24</div></td>
+  <td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=58317&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 58317</a><div class="small muted" style="font-weight:400">PUC project</div></td>
+  <td>SB 6 IMPLEMENTATION<div class="small"></div></td>
+  <td class="small hide-s"></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">matches PUC category rule project, implementation; closest: PUC 53298 (the IMM filed comments, 2022)</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">18</div></td>
+  <td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=24055&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 24055</a><div class="small muted" style="font-weight:400">PUC docket</div></td>
+  <td>PROTOCOL REVISION INFORMATIONAL FILINGS BY THE ELECTRIC RELIABILITY COUNCIL OF TEXAS<div class="small"></div></td>
+  <td class="small hide-s"></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">matches reliability, council texas, reliability council, electric reliability; closest: PUC 55999 (the IMM filed comments, 2026)</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">18</div></td>
+  <td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=35077&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 35077</a><div class="small muted" style="font-weight:400">PUC docket</div></td>
+  <td>INFORMATIONAL FILING OF ERCOT INTERCONNECTION AGREEMENTS PURSUANT TO SUBST. R. §25.195(e)<div class="small"></div></td>
+  <td class="small hide-s"></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">matches ercot, ercot interconnection, subst; closest: PUC 54163 (the IMM filed comments, 2022)</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">16</div></td>
+  <td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=59523&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 59523</a><div class="small muted" style="font-weight:400">PUC project</div></td>
+  <td>Implementation of PURA §35.153 - TDU and PGC Contracts for Electric Energy Storage<div class="small"></div></td>
+  <td class="small hide-s"></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">matches PUC category rule project, implementation, energy storage, contract; closest: PUC 53298 (the IMM filed comments, 2022)</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">16</div></td>
+  <td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=60359&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 60359</a><div class="small muted" style="font-weight:400">PUC docket</div></td>
+  <td>COMPLAINT OF SALT FORK WIND LLC AGAINST ERCOT AND REQUEST FOR EXTENSION AND EXEMPTION FROM AN ERCOT RELIABILITY REQUIREMENT UNDER 16 TAC § 22.251(R)<div class="small"></div></td>
+  <td class="small hide-s"></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">matches ercot, reliability, reliability requirement; closest: PUC 58198 (the IMM filed comments, 2026)</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">13</div></td>
+  <td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=26840&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 26840</a><div class="small muted" style="font-weight:400">PUC docket</div></td>
+  <td>CONTACT INFORMATION UPDATES PERTAINING TO ANY PARTICIPANT IN THE TEXAS ELECTRIC MARKET<div class="small"></div></td>
+  <td class="small hide-s"></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">matches market, electric market, information; closest: PUC 52373 (the IMM filed comments, 2021)</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">12</div></td>
+  <td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=41155&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 41155</a><div class="small muted" style="font-weight:400">PUC docket</div></td>
+  <td>PROPOSED REVISIONS OR ADDITIONS TO THE ELECTRIC RELIABILITY COUNCIL OF TEXAS TRANSMISSION PLANNING GUIDELINES AND PROCEDURES, SUBMITTED PURSUANT TO SUBST. R. §25.361(d)(3)<div class="small"></div></td>
+  <td class="small hide-s"></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">matches reliability, council texas, procedure, reliability council; closest: PUC 55999 (the IMM filed comments, 2026)</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">12</div></td>
+  <td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=56768&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 56768</a><div class="small muted" style="font-weight:400">PUC project</div></td>
+  <td>TECHNICAL REFERENCE MANUAL FOR ENERGY EFFICIENCY<div class="small"></div></td>
+  <td class="small hide-s"></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">matches PUC category rule project, manual, efficiency, technical</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">12</div></td>
+  <td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=59402&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 59402</a><div class="small muted" style="font-weight:400">PUC project</div></td>
+  <td>ACKNOWLEDGEMENTS OF FILING OBLIGATION AND NOTICES OF INTENT UNDER §25.60(C)(3) AND (E)<div class="small"></div></td>
+  <td class="small hide-s"></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">matches PUC category rule project, obligation</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">9</div></td>
+  <td class="id"><a href="https://senate.texas.gov/_assets/pdf/2026-Additional-Interim-Charges.pdf" rel="noopener">2026-Additional-Interim-Charges.pdf</a><div class="small muted" style="font-weight:400">Legislature interim charges</div></td>
+  <td>Senate interim charges: 2026 Additional Interim Charges<div class="small"></div></td>
+  <td class="small hide-s"></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">matches additional, charge; closest: NPRR1149 (the IMM filed comments, 2022)</td></tr>
+<tr data-rank="medium">
+  <td><span class="rel medium">medium</span><div class="small muted" title="Match with the IMM's public record, 0 to 100">6</div></td>
+  <td class="id"><a href="https://senate.texas.gov/_assets/pdf/2026-Interim-Charges.pdf" rel="noopener">2026-Interim-Charges.pdf</a><div class="small muted" style="font-weight:400">Legislature interim charges</div></td>
+  <td>Senate interim charges: 2026 Interim Charges<div class="small"></div></td>
+  <td class="small hide-s"></td>
+  <td class="nowrap"></td>
+  <td class="small hide-s">matches charge; closest: NPRR1204 (the IMM supported it, 2023)</td></tr>
+</tbody></table></div>
+
+<h2 id="deadlines">Dates in the next 60 days</h2>
+<p class="note">Comment deadlines, hearings and meetings where a listed item is on the agenda, as stated by the source or found in its filings. 31 more dates fall on items ranked low and are not listed.</p>
+<div class="wrap"><table><thead><tr><th>Date</th><th>What</th><th>Item</th><th>Rank</th></tr></thead><tbody>
+<tr><td class="nowrap">Nov 11, 2026</td><td>PRS Meeting (Protocol Revisions Subcommittee) <span class="small muted">(on agenda)</span></td>
+  <td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1255" rel="noopener">NPRR1255</a><div class="small muted" style="font-weight:400;white-space:normal">Introduction of Mitigation of ESRs</div></td>
+  <td><span class="rel high">high</span></td></tr>
+<tr><td class="nowrap">Nov 11, 2026</td><td>PRS Meeting (Protocol Revisions Subcommittee) <span class="small muted">(on agenda)</span></td>
+  <td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1278" rel="noopener">NPRR1278</a><div class="small muted" style="font-weight:400;white-space:normal">Establishing Advanced Grid Support Service as an Ancillary Service</div></td>
+  <td><span class="rel high">high</span></td></tr>
+<tr><td class="nowrap">Nov 11, 2026</td><td>PRS Meeting (Protocol Revisions Subcommittee) <span class="small muted">(on agenda)</span></td>
+  <td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1296" rel="noopener">NPRR1296</a><div class="small muted" style="font-weight:400;white-space:normal">Residential Demand Response Program</div></td>
+  <td><span class="rel high">high</span></td></tr>
+<tr><td class="nowrap">Nov 11, 2026</td><td>PRS Meeting (Protocol Revisions Subcommittee) <span class="small muted">(on agenda)</span></td>
+  <td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1310" rel="noopener">NPRR1310</a><div class="small muted" style="font-weight:400;white-space:normal">Dispatchable Reliability Reserve Service Plus Energy Storage Resource Participation and Release Factor</div></td>
+  <td><span class="rel high">high</span></td></tr>
+<tr><td class="nowrap">Nov 11, 2026</td><td>PRS Meeting (Protocol Revisions Subcommittee) <span class="small muted">(on agenda)</span></td>
+  <td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1340" rel="noopener">NPRR1340</a><div class="small muted" style="font-weight:400;white-space:normal">Dispatchable Reliability Reserve Service Ancillary Service with Energy Storage Resource Participation</div></td>
+  <td><span class="rel high">high</span></td></tr>
+<tr><td class="nowrap">Nov 11, 2026</td><td>PRS Meeting (Protocol Revisions Subcommittee) <span class="small muted">(on agenda)</span></td>
+  <td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1343" rel="noopener">NPRR1343</a><div class="small muted" style="font-weight:400;white-space:normal">Introduction of PTP Obligation Bid Fee in DAM</div></td>
+  <td><span class="rel high">high</span></td></tr>
+<tr><td class="nowrap">Nov 11, 2026</td><td>PRS Meeting (Protocol Revisions Subcommittee) <span class="small muted">(on agenda)</span></td>
+  <td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1348" rel="noopener">NPRR1348</a><div class="small muted" style="font-weight:400;white-space:normal">Telemetry Offsetting for Provisional Controllable Load Resources</div></td>
+  <td><span class="rel high">high</span></td></tr>
+<tr><td class="nowrap">Nov 11, 2026</td><td>PRS Meeting (Protocol Revisions Subcommittee) <span class="small muted">(on agenda)</span></td>
+  <td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1333" rel="noopener">NPRR1333</a><div class="small muted" style="font-weight:400;white-space:normal">Establish an Incentive Program for Advanced Grid Support</div></td>
+  <td><span class="rel medium">medium</span></td></tr>
+<tr><td class="nowrap">Nov 11, 2026</td><td>PRS Meeting (Protocol Revisions Subcommittee) <span class="small muted">(on agenda)</span></td>
+  <td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1352" rel="noopener">NPRR1352</a><div class="small muted" style="font-weight:400;white-space:normal">QSE Receipt and Payment of Weatherization Inspection Fee Invoices</div></td>
+  <td><span class="rel medium">medium</span></td></tr>
+<tr><td class="nowrap">Nov 18, 2026</td><td>Next Technical Advisory Committee meeting without a posted agenda. Expected: ERCOT lists TAC as the next group for this request. <span class="small muted">(meeting)</span></td>
+  <td class="id"><a href="https://www.ercot.com/mktrules/issues/NOGRR288" rel="noopener">NOGRR288</a><div class="small muted" style="font-weight:400;white-space:normal">Related to NPRR1340, Dispatchable Reliability Reserve Service Ancillary Service with Energy Storage Resource P</div></td>
+  <td><span class="rel high">high</span></td></tr>
+<tr><td class="nowrap">Nov 18, 2026</td><td>Next Technical Advisory Committee meeting without a posted agenda. Expected: ERCOT lists TAC as the next group for this request. <span class="small muted">(meeting)</span></td>
+  <td class="id"><a href="https://www.ercot.com/mktrules/issues/PGRR122" rel="noopener">PGRR122</a><div class="small muted" style="font-weight:400;white-space:normal">Reliability Performance Criteria for Loss of Load</div></td>
+  <td><span class="rel medium">medium</span></td></tr>
+<tr><td class="nowrap">Nov 19, 2026</td><td>Open Meeting <span class="small muted">(on agenda)</span></td>
+  <td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=54445&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 54445</a><div class="small muted" style="font-weight:400;white-space:normal">Review of Protocols Adopted by the Independent Organization</div></td>
+  <td><span class="rel high">high</span></td></tr>
+<tr><td class="nowrap">Nov 19, 2026</td><td>Open Meeting <span class="small muted">(on agenda)</span></td>
+  <td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=55999&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 55999</a><div class="small muted" style="font-weight:400;white-space:normal">REPORTS OF THE ELECTRIC RELIABILITY COUNCIL OF TEXAS</div></td>
+  <td><span class="rel high">high</span></td></tr>
+<tr><td class="nowrap">Nov 19, 2026</td><td>Open Meeting <span class="small muted">(on agenda)</span></td>
+  <td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=58777&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 58777</a><div class="small muted" style="font-weight:400;white-space:normal">Triennial Reliability Assessment for the ERCOT Region under §25.508</div></td>
+  <td><span class="rel high">high</span></td></tr>
+<tr><td class="nowrap">Nov 19, 2026</td><td>Open Meeting <span class="small muted">(on agenda)</span></td>
+  <td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=59402&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 59402</a><div class="small muted" style="font-weight:400;white-space:normal">ACKNOWLEDGEMENTS OF FILING OBLIGATION AND NOTICES OF INTENT UNDER §25.60(C)(3) AND (E)</div></td>
+  <td><span class="rel medium">medium</span></td></tr>
+<tr><td class="nowrap">Nov 19, 2026</td><td>Open Meeting <span class="small muted">(on agenda)</span></td>
+  <td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=59431&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 59431</a><div class="small muted" style="font-weight:400;white-space:normal">DISTRIBUTION POLE MANAGEMENT AND INSPECTION PLANS</div></td>
+  <td><span class="rel medium">medium</span></td></tr>
+<tr><td class="nowrap">Dec 3, 2026</td><td>Next Reliability and Operations Subcommittee meeting without a posted agenda. Expected: ERCOT lists ROS as the next group for this request. <span class="small muted">(meeting)</span></td>
+  <td class="id"><a href="https://www.ercot.com/mktrules/issues/NOGRR284" rel="noopener">NOGRR284</a><div class="small muted" style="font-weight:400;white-space:normal">Related to NPRR1310, Dispatchable Reliability Reserve Service Plus Energy Storage Resource Participation and R</div></td>
+  <td><span class="rel high">high</span></td></tr>
+<tr><td class="nowrap">Dec 3, 2026</td><td>Next Reliability and Operations Subcommittee meeting without a posted agenda. Expected: ERCOT lists ROS as the next group for this request. <span class="small muted">(meeting)</span></td>
+  <td class="id"><a href="https://www.ercot.com/mktrules/issues/PGRR142" rel="noopener">PGRR142</a><div class="small muted" style="font-weight:400;white-space:normal">In-kind Definition for Generation</div></td>
+  <td><span class="rel medium">medium</span></td></tr>
+<tr><td class="nowrap">Dec 4, 2026</td><td>Comment (Due December 4, 2026 <span class="small muted">(comments due)</span></td>
+  <td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=59997&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 59997</a><div class="small muted" style="font-weight:400;white-space:normal">Treatment of DRRS and Other Future Ancillary Services Costs in Existing Fixed-Rate Retail Contracts</div></td>
+  <td><span class="rel high">high</span></td></tr>
+<tr><td class="nowrap">Dec 7, 2026</td><td>Next Board of Directors meeting without a posted agenda. Expected: ERCOT lists BOARD as the next group for this request. <span class="small muted">(meeting)</span></td>
+  <td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1345" rel="noopener">NPRR1345</a><div class="small muted" style="font-weight:400;white-space:normal">Extend NPRR1279 Sunset Date for Exceptional Fuel Cost Process</div></td>
+  <td><span class="rel high">high</span></td></tr>
+<tr><td class="nowrap">Dec 9, 2026</td><td>Next Protocol Revisions Subcommittee meeting without a posted agenda. Expected: ERCOT lists PRS as the next group for this request. <span class="small muted">(meeting)</span></td>
+  <td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1353" rel="noopener">NPRR1353</a><div class="small muted" style="font-weight:400;white-space:normal">SCED Constraint Data and Shift Factor Reports</div></td>
+  <td><span class="rel high">high</span></td></tr>
+<tr><td class="nowrap">Dec 14, 2026</td><td>Comments Due – Project No. 59999 (PUC calendar) <span class="small muted">(comments due)</span></td>
+  <td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=59999&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 59999</a><div class="small muted" style="font-weight:400;white-space:normal">Rulemaking to Adopt a Standard Large Load Interconnection Agreement</div></td>
+  <td><span class="rel medium">medium</span></td></tr>
+<tr><td class="nowrap">Dec 18, 2026</td><td>Reply comments are due by December 18, 2026 <span class="small muted">(reply comments due)</span></td>
+  <td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=59997&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 59997</a><div class="small muted" style="font-weight:400;white-space:normal">Treatment of DRRS and Other Future Ancillary Services Costs in Existing Fixed-Rate Retail Contracts</div></td>
+  <td><span class="rel high">high</span></td></tr>
+<tr><td class="nowrap">Dec 31, 2026</td><td>final rule due by December 31, 2026 <span class="small muted">(deadline)</span></td>
+  <td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=58484&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 58484</a><div class="small muted" style="font-weight:400;white-space:normal">EVALUATION OF TRANSMISSION COST RECOVERY</div></td>
+  <td><span class="rel high">high</span></td></tr>
+</tbody></table></div>
+
+<h2 id="meetings">Meetings in the next 14 days</h2>
+<div class="wrap"><table><thead><tr><th>When</th><th>Body</th><th>Meeting</th><th>Listed items on the agenda</th></tr></thead><tbody>
+<tr><td class="nowrap">Wed Nov 11, 2026, 9:30 am</td><td>ERCOT</td>
+  <td><a href="https://www.ercot.com/calendar/11112026-PRS-Meeting" rel="noopener">PRS Meeting</a> <span class="small muted">Protocol Revisions Subcommittee</span></td>
+  <td class="small">NPRR1255, NPRR1278, NPRR1296, NPRR1310, NPRR1333, NPRR1340, NPRR1343, NPRR1348, NPRR1352</td></tr>
+<tr><td class="nowrap">Thu Nov 12, 2026, 9:00 am</td><td>ERCOT</td>
+  <td><a href="https://www.ercot.com/calendar/11122026-OTWG-Meeting-_-Webex" rel="noopener">OTWG Meeting - Webex Only</a> <span class="small muted">Operations Training Working Group</span></td>
+  <td class="small"></td></tr>
+<tr><td class="nowrap">Fri Nov 13, 2026, 9:30 am</td><td>ERCOT</td>
+  <td><a href="https://www.ercot.com/calendar/11132026-CFSG-Meeting-_-Webex" rel="noopener">CFSG Meeting - Webex Only</a> <span class="small muted">Credit Finance Sub Group</span></td>
+  <td class="small"></td></tr>
+<tr><td class="nowrap">Mon Nov 16, 2026, 1:30 pm</td><td>PUC</td>
+  <td><a href="https://www.puc.texas.gov/agency/calendar/appointmentdetail.aspx?ID=1836" rel="noopener">Energy Waste Advisory Committee</a></td>
+  <td class="small"></td></tr>
+<tr><td class="nowrap">Tue Nov 17, 2026, 9:30 am</td><td>ERCOT</td>
+  <td><a href="https://www.ercot.com/calendar/11172026-NDSWG-Meeting-_-Webex" rel="noopener">NDSWG Meeting - Webex Only</a> <span class="small muted">Network Data Support Working Group</span></td>
+  <td class="small"></td></tr>
+<tr><td class="nowrap">Tue Nov 17, 2026, 1:00 pm</td><td>ERCOT</td>
+  <td><a href="https://www.ercot.com/calendar/11172026-Batch_CTP-Workshop-4a_CTP-Planning" rel="noopener">Batch/CTP Workshop 4a-CTP Planning Focus</a> <span class="small muted">Texas Standard Electronic Transactions/Load Profiling Working Group</span></td>
+  <td class="small"></td></tr>
+<tr><td class="nowrap">Wed Nov 18, 2026, 9:30 am</td><td>ERCOT</td>
+  <td><a href="https://www.ercot.com/calendar/11182026-TAC-Meeting" rel="noopener">TAC Meeting</a> <span class="small muted">Technical Advisory Committee</span></td>
+  <td class="small"></td></tr>
+<tr><td class="nowrap">Wed Nov 18, 2026, 9:30 am</td><td>ERCOT</td>
+  <td><a href="https://www.ercot.com/calendar/11182026-SSWG-Meeting-_-Webex" rel="noopener">SSWG Meeting - Webex Only</a> <span class="small muted">Steady State Working Group</span></td>
+  <td class="small"></td></tr>
+<tr><td class="nowrap">Wed Nov 18, 2026, 9:30 am</td><td>ERCOT</td>
+  <td><a href="https://www.ercot.com/calendar/11182026-PDCWG-Meeting-_-Webex" rel="noopener">PDCWG Meeting - Webex Only</a> <span class="small muted">Performance, Disturbance, Compliance Working Group</span></td>
+  <td class="small"></td></tr>
+<tr><td class="nowrap">Wed Nov 18, 2026, 2:00 pm</td><td>ERCOT</td>
+  <td><a href="https://www.ercot.com/calendar/11182026-Q_A-Session-for-Submitting" rel="noopener">Q&amp;A Session for Submitting a Winter 2026-27 Declaration of Weather Preparedness</a> <span class="small muted">Performance, Disturbance, Compliance Working Group</span></td>
+  <td class="small"></td></tr>
+<tr><td class="nowrap">Thu Nov 19, 2026, 9:30 am</td><td>ERCOT</td>
+  <td><a href="https://www.ercot.com/calendar/11192026-LLWG-Meeting" rel="noopener">LLWG Meeting</a> <span class="small muted">Large Load Working Group</span></td>
+  <td class="small"></td></tr>
+<tr><td class="nowrap">Thu Nov 19, 2026, 9:30 am</td><td>PUC</td>
+  <td><a href="https://www.puc.texas.gov/agency/calendar/appointmentdetail.aspx?ID=1776" rel="noopener">Open Meeting</a></td>
+  <td class="small">PUC 54445, PUC 55999, PUC 58777, PUC 59402, PUC 59431</td></tr>
+<tr><td class="nowrap">Thu Nov 19, 2026, 1:00 pm</td><td>ERCOT</td>
+  <td><a href="https://www.ercot.com/calendar/11192026-Batch_CTP-Workshop-4b_Batch-Planning" rel="noopener">Batch/CTP Workshop 4b-Batch Planning Focus</a> <span class="small muted">The Public Utility Commission of Texas</span></td>
+  <td class="small"></td></tr>
+<tr><td class="nowrap">Thu Nov 19, 2026, 2:00 pm</td><td>ERCOT</td>
+  <td><a href="https://www.ercot.com/calendar/11192026-TWG-Meeting-_-Webex" rel="noopener">TWG Meeting - Webex Only</a> <span class="small muted">Technology Working Group</span></td>
+  <td class="small"></td></tr>
+<tr><td class="nowrap">Fri Nov 20, 2026, 9:30 am</td><td>ERCOT</td>
+  <td><a href="https://www.ercot.com/calendar/11202026-SAWG-Meeting-_-Webex" rel="noopener">SAWG Meeting - Webex Only</a> <span class="small muted">Supply Analysis Working Group</span></td>
+  <td class="small"></td></tr>
+<tr><td class="nowrap">Fri Nov 20, 2026, 9:30 am</td><td>ERCOT</td>
+  <td><a href="https://www.ercot.com/calendar/11202026-IBRWG-Meeting-_-Webex" rel="noopener">IBRWG Meeting - Webex Only</a> <span class="small muted">IBRWG Inverter-Based Resource Working Group</span></td>
+  <td class="small"></td></tr>
+<tr><td class="nowrap">Mon Nov 23, 2026, 1:30 pm</td><td>ERCOT</td>
+  <td><a href="https://www.ercot.com/calendar/11232026-WMWG-Meeting-_-Webex" rel="noopener">WMWG Meeting - Webex Only</a> <span class="small muted">Wholesale Market Working Group</span></td>
+  <td class="small"></td></tr>
+<tr><td class="nowrap">Tue Nov 24, 2026, 9:30 am</td><td>ERCOT</td>
+  <td><a href="https://www.ercot.com/calendar/11242026-OWG-Meeting-_-Webex" rel="noopener">OWG Meeting - Webex Only</a> <span class="small muted">Operations Working Group</span></td>
+  <td class="small"></td></tr>
+</tbody></table></div>
+
+<h2 id="changes">Changes at the source in the last 7 days</h2>
+<p class="note">New filings, comments, votes and status changes on listed items, newest first.</p>
+<div class="wrap"><table><thead><tr><th>Seen</th><th>Item</th><th>Change</th></tr></thead><tbody>
+<tr><td class="nowrap">Nov 11</td><td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=59142&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 59142</a></td><td>New filing by Becky Wied: Project 59142 - Opposition to Synergen&#39;s Request for Good Cause Exception Relating to Batch Zero Eligibility Deadlines</td></tr>
+<tr><td class="nowrap">Nov 11</td><td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=59999&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 59999</a></td><td>New filing by OPUC: OPUC NOTICE OF PARTICIPATION LETTER</td></tr>
+<tr><td class="nowrap">Nov 11</td><td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=56736&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 56736</a></td><td>New filing by PUMPJACK POWER, LLC: Pumpjack Power, LLC Q3 2026 Retail Performance Measures Report – Confidential Version</td></tr>
+<tr><td class="nowrap">Nov 11</td><td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=35077&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 35077</a></td><td>New filing by LCRA TRANSMISSION SERVICES CORPORATION: FIRST AMENDMENT TO THE ERCOT STANDARD GENERATION INTERCONNECTION AGREEMENT BETWEEN LCRA TRANSMISSION SERVICES CORPORATION AND COLD CREEK SOLAR AND STORAGE, LLC</td></tr>
+<tr><td class="nowrap">Nov 11</td><td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1352" rel="noopener">NPRR1352</a></td><td>New comment by ERCOT: 1352NPRR-02 ERCOT Comments 111026</td></tr>
+<tr><td class="nowrap">Nov 11</td><td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1343" rel="noopener">NPRR1343</a></td><td>New comment by ERCOT: 1343NPRR-18 ERCOT Comments 111026</td></tr>
+<tr><td class="nowrap">Nov 10</td><td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=56736&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 56736</a></td><td>New filing by PUMPJACK POWER, LLC: Pumpjack Power, LLC Q3 2026 Retail Performance Measures Report – Public Redacted Version</td></tr>
+<tr><td class="nowrap">Nov 10</td><td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=55999&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 55999</a></td><td>New filing by ERCOT: ERCOT’S REPORT ON DIRECT CURRENT TIE (DC TIE) ENERGY IMPORTS AND EXPORTS (NOVEMBER 2026)</td></tr>
+<tr><td class="nowrap">Nov 10</td><td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=56736&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 56736</a></td><td>New adopted rule: Adopted §25.88 Retail Market Performance Measure Reporting.</td></tr>
+<tr><td class="nowrap">Nov 10</td><td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=59431&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 59431</a></td><td>New adopted rule: Adopted §25.63 Distribution Pole Management Inspection Plans.</td></tr>
+<tr><td class="nowrap">Nov 10</td><td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=59288&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 59288</a></td><td>New adopted rule: Adopted §25.107 Certification and Obligations of Retail Electric Providers (REPs).</td></tr>
+<tr><td class="nowrap">Nov 10</td><td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=59523&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 59523</a></td><td>New adopted rule: Adopted §25.58 Contracts for Electric Energy Storage.</td></tr>
+<tr><td class="nowrap">Nov 10</td><td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=58777&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 58777</a></td><td>IMM comment or filing detected: Comments from IMM on proposed parameters for the assessment of the Reliability Standard.</td></tr>
+<tr><td class="nowrap">Nov 10</td><td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=58484&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 58484</a></td><td>IMM comment or filing detected: IMM comments on transmission cost allocation.</td></tr>
+<tr><td class="nowrap">Nov 10</td><td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=55999&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 55999</a></td><td>IMM comment or filing detected: IMM review of market RTC performance</td></tr>
+<tr><td class="nowrap">Nov 10</td><td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1343" rel="noopener">NPRR1343</a></td><td>IMM comment or filing detected: 1343NPRR-09 IMM Comments 100226</td></tr>
+<tr><td class="nowrap">Nov 10</td><td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1310" rel="noopener">NPRR1310</a></td><td>IMM comment or filing detected: 1310NPRR-12 IMM Comments 020326</td></tr>
+<tr><td class="nowrap">Nov 10</td><td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1296" rel="noopener">NPRR1296</a></td><td>IMM comment or filing detected: 1296NPRR-11 IMM Comments 110325</td></tr>
+<tr><td class="nowrap">Nov 10</td><td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1278" rel="noopener">NPRR1278</a></td><td>IMM comment or filing detected: 1278NPRR-03 IMM Comments 051325</td></tr>
+</tbody></table></div>
+
+<h2 id="record">The IMM's public record on tracked items</h2>
+<p class="note">Items on which the IMM sponsored a revision request, filed comments, stated a position in ERCOT's report, or filed at the PUC. This record is what the ranking learns from.</p>
+<div class="wrap"><table><thead><tr><th>ID</th><th>Item</th><th>What the IMM did</th><th class="hide-s">As stated at the source</th></tr></thead><tbody>
+<tr><td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1342" rel="noopener">NPRR1342</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Mitigated Offer Caps for Contract for Capacity Resources</td><td class="nowrap"><span class="tag imm">IMM supports</span></td><td class="small hide-s">1342NPRR-12 PUCT Report 110526: IMM supports NPRR1342.</td></tr>
+<tr><td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1343" rel="noopener">NPRR1343</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Introduction of PTP Obligation Bid Fee in DAM</td><td class="nowrap"><span class="tag imm">IMM commented</span></td><td class="small hide-s">1343NPRR-12 ERCOT and IMM Comments 101326 (Oct 13, 2026)</td></tr>
+<tr><td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=55999&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 55999</a><div class="small muted" style="font-weight:400">PUC</div></td>
+  <td>REPORTS OF THE ELECTRIC RELIABILITY COUNCIL OF TEXAS</td><td class="nowrap"><span class="tag imm">IMM filed</span></td><td class="small hide-s">IMM Comments on the Good Cause Exception for the 2026 AS Methodology (Aug 20, 2026)</td></tr>
+<tr><td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1214" rel="noopener">NPRR1214</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Reliability Deployment Price Adder Fix to Provide Locational Price Signals, Reduce Uplift and Risk</td><td class="nowrap"><span class="tag imm">IMM commented</span></td><td class="small hide-s">1214NPRR-24 IMM Comments 062226 (Jun 22, 2026)</td></tr>
+<tr><td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1292" rel="noopener">NPRR1292</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Granular Product Type for CRR TOU</td><td class="nowrap"><span class="tag imm">IMM supports</span></td><td class="small hide-s">1292NPRR-24 PUCT Report 110526: IMM supports NPRR1292.</td></tr>
+<tr><td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1301" rel="noopener">NPRR1301</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Align Protocols to Constraint Activation Procedure</td><td class="nowrap"><span class="tag imm">IMM commented</span></td><td class="small hide-s">1301NPRR-17 IMM Comments 070926 (Jul 9, 2026)</td></tr>
+<tr><td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1326" rel="noopener">NPRR1326</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Add Energy Storage Resource (ESR) State of Charge (SOC) Information to the Ancillary Services Capacity Monitor</td><td class="nowrap"><span class="tag imm">IMM supports</span></td><td class="small hide-s">1326NPRR-15 PUCT Report 110526: IMM supports NPRR1326.</td></tr>
+<tr><td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1337" rel="noopener">NPRR1337</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>ERS Enhancements</td><td class="nowrap"><span class="tag imm">IMM commented</span></td><td class="small hide-s">1337NPRR-18 IMM Comments 081126 (Aug 11, 2026)</td></tr>
+<tr><td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1345" rel="noopener">NPRR1345</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Extend NPRR1279 Sunset Date for Exceptional Fuel Cost Process</td><td class="nowrap"><span class="tag imm">IMM supports</span></td><td class="small hide-s">1345NPRR-09 TAC Report 102826: IMM supports NPRR1345.</td></tr>
+<tr><td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=58777&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 58777</a><div class="small muted" style="font-weight:400">PUC</div></td>
+  <td>Triennial Reliability Assessment for the ERCOT Region under §25.508</td><td class="nowrap"><span class="tag imm">IMM filed</span></td><td class="small hide-s">Comments from IMM on proposed parameters for the assessment of the Reliability Standard. (Mar 3, 2026)</td></tr>
+<tr><td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=54445&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 54445</a><div class="small muted" style="font-weight:400">PUC</div></td>
+  <td>Review of Protocols Adopted by the Independent Organization</td><td class="nowrap"><span class="tag imm">IMM filed</span></td><td class="small hide-s">POTOMAC ECONOMICS’ COMMENTS TO ERCOT’S RESPONSE REGARDING NODAL PROTOCOL REVISION REQUEST 1224 (2024)</td></tr>
+<tr><td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=58555&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 58555</a><div class="small muted" style="font-weight:400">PUC</div></td>
+  <td>ERCOT ANCILLARY AND RELIABILITY SERVICES COST ALLOCATION STUDY PURSUANT TO PURA §39.1593</td><td class="nowrap"><span class="tag imm">IMM filed</span></td><td class="small hide-s">IMM Comments on AS Cost Allocation Study P-58555 (2025)</td></tr>
+<tr><td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=58000&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 58000</a><div class="small muted" style="font-weight:400">PUC</div></td>
+  <td>Rulemaking to Update Wholesale and IOU Retail Transmission Cost Recovery in the ERCOT Region</td><td class="nowrap"><span class="tag imm">IMM filed</span></td><td class="small hide-s">IMM Comments on Transmission Cost Allocation Project 58000 (Aug 11, 2026)</td></tr>
+<tr><td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=58484&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 58484</a><div class="small muted" style="font-weight:400">PUC</div></td>
+  <td>EVALUATION OF TRANSMISSION COST RECOVERY</td><td class="nowrap"><span class="tag imm">IMM filed</span></td><td class="small hide-s">IMM comments on transmission cost allocation. (Apr 27, 2026)</td></tr>
+<tr><td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=59550&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 59550</a><div class="small muted" style="font-weight:400">PUC</div></td>
+  <td>QUINQUENNIAL REVIEW OF SYSTEM-WIDE OFFER CAP PROGRAM UNDER 16 TAC 25.509(d)</td><td class="nowrap"><span class="tag imm">IMM filed</span></td><td class="small hide-s">IMM Comments (revised) (Sep 18, 2026)</td></tr>
+<tr><td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=58482&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 58482</a><div class="small muted" style="font-weight:400">PUC</div></td>
+  <td>Large Load Demand Management Service</td><td class="nowrap"><span class="tag imm">IMM filed</span></td><td class="small hide-s">IMM Comments for the Large Load Demand Management Service (LLDMS) P-58482 (Sep 4, 2026)</td></tr>
+<tr><td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=34677&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 34677</a><div class="small muted" style="font-weight:400">PUC</div></td>
+  <td>REPORTS OF THE INDEPENDENT MARKET MONITOR FOR THE ERCOT REGION</td><td class="nowrap"><span class="tag imm">IMM filed</span></td><td class="small hide-s">IMM 2025 State of the ERCOT Market Report (May 31, 2026)</td></tr>
+<tr><td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=48540&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 48540</a><div class="small muted" style="font-weight:400">PUC</div></td>
+  <td>REVIEW OF REAL-TIME CO-OPTIMIZATION IN THE ERCOT MARKET</td><td class="nowrap"><span class="tag imm">IMM filed</span></td><td class="small hide-s">REPLY COMMENTS (2019)</td></tr>
+<tr><td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1296" rel="noopener">NPRR1296</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Residential Demand Response Program</td><td class="nowrap"><span class="tag imm">IMM commented</span></td><td class="small hide-s">1296NPRR-16 IMM Comments 022426 (Feb 24, 2026)</td></tr>
+<tr><td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1315" rel="noopener">NPRR1315</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Changes to Process of Evaluating the Potential Needs for Additional Capacity and Mitigated Offer Cap</td><td class="nowrap"><span class="tag imm">IMM commented</span></td><td class="small hide-s">1315NPRR-08 IMM Comments 032426 (Mar 24, 2026)</td></tr>
+<tr><td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1330" rel="noopener">NPRR1330</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Mitigated Offer Caps for RMR Units</td><td class="nowrap"><span class="tag imm">IMM supports</span></td><td class="small hide-s">1330NPRR-09 PUCT Report 070926: IMM supports NPRR1330.</td></tr>
+<tr><td class="id"><a href="https://www.ercot.com/mktrules/issues/NOGRR283" rel="noopener">NOGRR283</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Board Priority - Related to NPRR1309, Dispatchable Reliability Reserve Service Ancillary Service</td><td class="nowrap"><span class="tag imm">IMM supports</span></td><td class="small hide-s">283NOGRR-12 PUCT Report 070926: IMM supports NOGRR283.</td></tr>
+<tr><td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1309" rel="noopener">NPRR1309</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Board Priority - Dispatchable Reliability Reserve Service Ancillary Service</td><td class="nowrap"><span class="tag imm">IMM commented</span></td><td class="small hide-s">1309NPRR-27 IMM Comments 042426 (Apr 24, 2026)</td></tr>
+<tr><td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=59772&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 59772</a><div class="small muted" style="font-weight:400">PUC</div></td>
+  <td>PROCEEDING TO ADJUST THE 2026 LOAD FORECAST USED BY ERCOT</td><td class="nowrap"><span class="tag imm">IMM filed</span></td><td class="small hide-s">IMM Comments on Load Forecast Adjustments P-59772 (Jun 1, 2026)</td></tr>
+<tr><td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1275" rel="noopener">NPRR1275</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Expansion of Qualifying Pipeline Definition for Firm Fuel Supply Service in Phase 3</td><td class="nowrap"><span class="tag imm">IMM commented</span></td><td class="small hide-s">1275NPRR-06 IMM Comments 040925 (Apr 9, 2025)</td></tr>
+<tr><td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1323" rel="noopener">NPRR1323</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Correction to Inadvertent Removal of Real-Time MCPC Capping for NPRR1290 Phase 2</td><td class="nowrap"><span class="tag imm">IMM supports</span></td><td class="small hide-s">1323NPRR-08 PUCT Report 052926: IMM supports NPRR1323.</td></tr>
+<tr><td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=55797&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 55797</a><div class="small muted" style="font-weight:400">PUC</div></td>
+  <td>DISPATCHABLE RELIABILITY RESERVE SERVICE (DRRS)</td><td class="nowrap"><span class="tag imm">IMM filed</span></td><td class="small hide-s">IMM LETTER SUPPORTING STANDALONE DRRS (2023)</td></tr>
+<tr><td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1310" rel="noopener">NPRR1310</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Dispatchable Reliability Reserve Service Plus Energy Storage Resource Participation and Release Factor</td><td class="nowrap"><span class="tag imm">IMM commented</span></td><td class="small hide-s">1310NPRR-12 IMM Comments 020326 (Feb 3, 2026)</td></tr>
+<tr><td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=58434&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 58434</a><div class="small muted" style="font-weight:400">PUC</div></td>
+  <td>RULEMAKING FOR FIRM FUEL SUPPLY SERVICE</td><td class="nowrap"><span class="tag imm">IMM filed</span></td><td class="small hide-s">IMM Commentary on FFSS Rulemaking P-58434 (2025)</td></tr>
+<tr><td class="id"><a href="https://interchange.puc.texas.gov/search/filings/?UtilityType=A&amp;ControlNumber=58198&amp;ItemMatch=Equal&amp;DocumentType=ALL&amp;SortOrder=Ascending" rel="noopener">PUC 58198</a><div class="small muted" style="font-weight:400">PUC</div></td>
+  <td>RULEMAKING TO IMPLEMENT FIRMING RELIABILITY REQUIREMENTS FOR ELECTRIC GENERATING FACILITIES IN THE ERCOT REGION UNDER PURA §39.1592</td><td class="nowrap"><span class="tag imm">IMM filed</span></td><td class="small hide-s">IMM Comments on Firming Rulemaking (2025)</td></tr>
+<tr><td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1285" rel="noopener">NPRR1285</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Improve Self-Commitment within RUC Opt Out Window</td><td class="nowrap"><span class="tag imm">IMM opposes</span></td><td class="small hide-s">1285NPRR-16 PUCT Report 011526: IMM opposes NPRR1285.</td></tr>
+<tr><td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1287" rel="noopener">NPRR1287</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Revisions to Outage Coordination</td><td class="nowrap"><span class="tag imm">IMM supports</span></td><td class="small hide-s">1287NPRR-23 PUCT Report 011526: The IMM supports approval of NPRR1287.</td></tr>
+<tr><td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1278" rel="noopener">NPRR1278</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Establishing Advanced Grid Support Service as an Ancillary Service</td><td class="nowrap"><span class="tag imm">IMM commented</span></td><td class="small hide-s">1278NPRR-03 IMM Comments 051325 (May 13, 2025)</td></tr>
+<tr><td class="id"><a href="https://www.ercot.com/mktrules/issues/NPRR1182" rel="noopener">NPRR1182</a><div class="small muted" style="font-weight:400">ERCOT</div></td>
+  <td>Inclusion of Controllable Load Resources and Energy Storage Resources in the Constraint Competitiveness Test Process</td><td class="nowrap"><span class="tag imm">IMM supports</span></td><td class="small hide-s">1182NPRR-10 PUCT Report 101223: IMM supports NPRR1182.</td></tr>
+</tbody></table></div>
+
+<h2 id="ranking">How the ranking works</h2>
+<ol class="steps">
+  <li><b>The record comes first.</b> An item on which the IMM sponsored, commented, took a position or filed is ranked high.</li>
+  <li><b>Everything else gets a score from 0 to 100.</b> The score says how closely an item's wording matches items the IMM engaged on, weighed against items it passed over. It was learned from 7,164 ERCOT revision requests and PUC control numbers since 2019, 97 of them with IMM engagement. Bills and notices leave no such record, so they borrow the same score and are ranked against each other.</li>
+  <li><b>The score sets the rank.</b> The cut-offs are placed so that, on items the model had not seen, 9 in 10 of those the IMM engaged on come out medium or high.</li>
+  <li><b>Settled items stay low.</b> Anything closed by October 31, 2026 without an IMM comment is ranked low. Anything still open is ranked by its score.</li>
+</ol>
+<p class="note">Test: trained only on items from before 2025, then asked to rank everything since.</p>
+<div class="wrap" style="max-width:760px"><table><thead><tr><th>Group</th><th>Rank given</th><th class="num">IMM engaged</th><th class="num">IMM passed over</th></tr></thead><tbody>
+<tr><td>ERCOT revision requests</td><td><span class="rel high">high</span></td><td class="num">11</td><td class="num">11</td></tr>
+<tr><td></td><td><span class="rel medium">medium</span></td><td class="num">12</td><td class="num">23</td></tr>
+<tr><td></td><td><span class="rel low">low</span></td><td class="num">1</td><td class="num">77</td></tr>
+<tr><td>PUC control numbers</td><td><span class="rel high">high</span></td><td class="num">8</td><td class="num">7</td></tr>
+<tr><td></td><td><span class="rel medium">medium</span></td><td class="num">5</td><td class="num">50</td></tr>
+<tr><td></td><td><span class="rel low">low</span></td><td class="num">2</td><td class="num">1,721</td></tr>
+</tbody></table></div>
+<p class="note">A rank is a sort order, not a prediction of what the IMM will do. About 1 item in 10 that the IMM engages on would be ranked low.</p>
+
+
+<h2 id="sources">Sources</h2>
+<div class="wrap" style="max-width:760px"><table><thead><tr><th>Source</th><th>Last read</th><th class="num">Items held</th></tr></thead><tbody>
+<tr><td>ERCOT notices, news and meetings</td><td class="nowrap">Nov 11, 6:59 am</td><td class="num"></td></tr>
+<tr><td>ERCOT revision requests</td><td class="nowrap">Nov 11, 6:48 am</td><td class="num">643</td></tr>
+<tr><td>PUC Interchange filings</td><td class="nowrap">Nov 11, 3:22 pm</td><td class="num">1,200</td></tr>
+<tr><td>PUC website (calendar, meetings, rules)</td><td class="nowrap">Nov 11, 7:01 am</td><td class="num"></td></tr>
+<tr><td>Texas Legislature (bills, hearings, interim charges)</td><td class="nowrap">Nov 11, 8:16 am</td><td class="num">14,170</td></tr>
+</tbody></table></div>
+<p class="note">Read once a day from ERCOT (revision requests, market notices, calendar), the PUC of Texas (Interchange filings, calendar, rules pages) and the Texas Legislature (bill histories and committee schedules). After each read the tracker compares what it holds with each source's own listings.</p>
+</main>
+<footer>Unofficial and automated. Compiled from public records of ERCOT, the Public Utility Commission of Texas and the Texas Legislature. Not a publication of the Independent Market Monitor or of Potomac Economics. Page built November 11, 2026, 8:54 am Central.</footer>
+<script>
+(function () {
+  var updated = Date.parse(document.body.getAttribute("data-updated")), hours = (Date.now() - updated) / 36e5;
+  if (hours > 36) {
+    var el = document.getElementById("stale");
+    el.textContent = "This page was last updated " + Math.floor(hours / 24) + " day" + (hours >= 48 ? "s" : "") + " ago. The daily read has not run since, so newer items are missing.";
+    el.hidden = false;
+  }
+  var q = document.getElementById("q"), only = document.getElementById("onlyhigh"), shown = document.getElementById("shown");
+  var rows = Array.prototype.slice.call(document.querySelectorAll("#items tbody tr"));
+  function apply() {
+    var words = q.value.toLowerCase().split(/\s+/).filter(Boolean), n = 0;
+    rows.forEach(function (r) {
+      var text = r.textContent.toLowerCase();
+      var ok = (!only.checked || r.getAttribute("data-rank") === "high") && words.every(function (w) { return text.indexOf(w) >= 0; });
+      r.style.display = ok ? "" : "none";
+      n += ok ? 1 : 0;
+    });
+    shown.textContent = n + " of " + rows.length + " shown";
+  }
+  q.addEventListener("input", apply); only.addEventListener("change", apply); apply();
+})();
+</script>
+</body>
+</html>
