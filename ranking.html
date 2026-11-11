@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Ranking | IMM Regulatory Tracker</title>
+<link rel="stylesheet" href="app.css?v=202611111454">
+<link rel="stylesheet" href="site.css?v=202611111454">
+</head>
+<body data-updated="2026-11-11T14:54:02Z" data-today="2026-11-11" data-version="202611111454">
+<header class="site"><div class="in">
+  <div class="product brand">IMM Regulatory Tracker</div>
+  <nav class="main">
+    <a href="index.html" id="nav-open" class="">Open items <span class="n">54</span></a>
+    <a href="index.html?status=all" id="nav-all">All items</a>
+    <a href="deadlines.html" class="">Deadlines</a>
+    <a href="events.html" class="">Events</a>
+    <a href="ranking.html" class="on">Ranking</a>
+    <a href="history.html" class="">History</a>
+  </nav>
+  <div class="who">Updated<br>Nov 11, 8:54 am</div>
+</div></header>
+<main>
+<div id="stale" class="flash alarm" hidden></div>
+
+<h1>How ranking works</h1>
+<p class="intro">Every item is kept. Ranking only decides what comes first.</p>
+
+<div class="cols"><div>
+<h2>The four steps</h2>
+<ol style="margin:4px 0 12px 18px;padding:0;line-height:21px;max-width:760px">
+  <li><b>The record comes first.</b> If the IMM sponsored a revision request, filed comments, stated a position in ERCOT's report, or filed in a PUC control number, the item is high.</li>
+  <li><b>Everything else gets a score from 0 to 100.</b> The score says how closely the item's wording matches items the IMM engaged on, weighed against items it passed over. It is learned from the record below, not from a hand-written keyword list. Bills and notices leave no IMM record of their own, so a bill is scored the way a PUC project on the same subject would be and an ERCOT notice the way a protocol revision would be; their score is then their percentile among electric bills, or among notices.</li>
+  <li><b>The score sets the rank.</b> The cut-offs are placed so that, on items the model had never seen, 9 in 10 of those the IMM engaged on come out medium or high and 6 in 10 come out high.</li>
+  <li><b>Settled items stay low.</b> An item that closed on or before October 31, 2026 without an IMM comment is ranked low whatever its score. Anything still open is ranked by its score.</li>
+</ol>
+<h2>What it learned from</h2>
+<table><thead><tr><th>Group</th><th class="num">IMM engaged</th><th class="num">IMM passed over</th></tr></thead><tbody>
+<tr><td>ERCOT revision requests</td><td class="num">70</td><td class="num">318</td></tr><tr><td>PUC control numbers</td><td class="num">27</td><td class="num">6,749</td></tr>
+</tbody></table>
+<p class="small">Items from 2019 to 2026. Engaged means: the IMM filed comments (47), the IMM sponsored it (6), the IMM supported it (41), the IMM opposed it (2), the IMM stated a position (1). Passed over means ERCOT's report says the IMM has no opinion, or the item was settled by October 31, 2026 with no IMM comment.</p>
+<h2>Test on the most recent items</h2>
+<p class="small" style="max-width:760px">The model was trained only on items from before 2025 and then asked to rank everything since.</p>
+
+<table><thead><tr><th>Group</th><th>Rank given</th><th class="num">IMM engaged</th><th class="num">IMM passed over</th></tr></thead><tbody>
+
+<tr><td>ERCOT revision requests</td><td><span class="rel high">high</span></td>
+  <td class="num">11 <span class="muted">(46%)</span></td>
+  <td class="num">11 <span class="muted">(10%)</span></td></tr><tr><td></td><td><span class="rel medium">medium</span></td>
+  <td class="num">12 <span class="muted">(50%)</span></td>
+  <td class="num">23 <span class="muted">(21%)</span></td></tr><tr><td></td><td><span class="rel low">low</span></td>
+  <td class="num">1 <span class="muted">(4%)</span></td>
+  <td class="num">77 <span class="muted">(69%)</span></td></tr>
+<tr><td>PUC control numbers</td><td><span class="rel high">high</span></td>
+  <td class="num">8 <span class="muted">(53%)</span></td>
+  <td class="num">7 <span class="muted">(0%)</span></td></tr><tr><td></td><td><span class="rel medium">medium</span></td>
+  <td class="num">5 <span class="muted">(33%)</span></td>
+  <td class="num">50 <span class="muted">(3%)</span></td></tr><tr><td></td><td><span class="rel low">low</span></td>
+  <td class="num">2 <span class="muted">(13%)</span></td>
+  <td class="num">1,721 <span class="muted">(97%)</span></td></tr>
+</tbody></table>
+
+<h2>Check on held-out items, all years</h2>
+<p class="small" style="max-width:760px">Each item was ranked by a model trained without it.</p>
+
+<table><thead><tr><th>Group</th><th>Rank given</th><th class="num">IMM engaged</th><th class="num">IMM passed over</th></tr></thead><tbody>
+
+<tr><td>ERCOT revision requests</td><td><span class="rel high">high</span></td>
+  <td class="num">42 <span class="muted">(60%)</span></td>
+  <td class="num">41 <span class="muted">(13%)</span></td></tr><tr><td></td><td><span class="rel medium">medium</span></td>
+  <td class="num">21 <span class="muted">(30%)</span></td>
+  <td class="num">65 <span class="muted">(20%)</span></td></tr><tr><td></td><td><span class="rel low">low</span></td>
+  <td class="num">7 <span class="muted">(10%)</span></td>
+  <td class="num">212 <span class="muted">(67%)</span></td></tr>
+<tr><td>PUC control numbers</td><td><span class="rel high">high</span></td>
+  <td class="num">16 <span class="muted">(59%)</span></td>
+  <td class="num">25 <span class="muted">(0%)</span></td></tr><tr><td></td><td><span class="rel medium">medium</span></td>
+  <td class="num">8 <span class="muted">(30%)</span></td>
+  <td class="num">118 <span class="muted">(2%)</span></td></tr><tr><td></td><td><span class="rel low">low</span></td>
+  <td class="num">3 <span class="muted">(11%)</span></td>
+  <td class="num">6,606 <span class="muted">(98%)</span></td></tr>
+</tbody></table>
+
+<p class="small muted">Trained 2026-11-11 15:47 on 11,011 terms.</p>
+</div><div>
+<h2>Terms that raise the score most</h2>
+<p class="small" style="line-height:20px"><span class="tag">ercot</span><span class="tag">PUC category market analysis</span><span class="tag">market</span><span class="tag">PUC category rule project</span><span class="tag">mechanism</span><span class="tag">reliability</span><span class="tag">ancillary</span><span class="tag">report electric</span><span class="tag">management service</span><span class="tag">performance</span><span class="tag">evaluation transmission</span><span class="tag">ercot region</span><span class="tag">ancillary service</span><span class="tag">independent</span><span class="tag">demand</span><span class="tag">real-time</span><span class="tag">current</span><span class="tag">region</span><span class="tag">used</span><span class="tag">congestion</span><span class="tag">Protocol section 6</span><span class="tag">cost</span><span class="tag">Protocol section 2</span><span class="tag">economic</span><span class="tag">reliability reserve</span><span class="tag">dispatchable reliability</span><span class="tag">offer</span><span class="tag">pricing</span><span class="tag">ercot interconnection</span><span class="tag">constraint</span><span class="tag">wholesale electric</span><span class="tag">evaluation</span><span class="tag">biennial</span><span class="tag">dispatchable</span><span class="tag">cap</span><span class="tag">reason</span><span class="tag">market design</span><span class="tag">supply</span><span class="tag">fuel supply</span><span class="tag">crr</span><span class="tag">Protocol section 2.1</span><span class="tag">procurement</span><span class="tag">reserve service</span><span class="tag">design</span><span class="tag">firm</span><span class="tag">pricing program</span><span class="tag">emergency pricing</span><span class="tag">ruc</span><span class="tag">load forecast</span><span class="tag">supply service</span><span class="tag">firm fuel</span><span class="tag">sced</span><span class="tag">offer cap</span><span class="tag">price</span><span class="tag">management</span><span class="tag">Protocol section 4</span><span class="tag">program</span><span class="tag">strategic</span><span class="tag">align</span><span class="tag">used ercot</span></p>
+<h2>Terms that lower it most</h2>
+<p class="small" style="line-height:20px"><span class="tag">application</span><span class="tag">llc</span><span class="tag">company</span><span class="tag">registration</span><span class="tag">power</span><span class="tag">amend</span><span class="tag">approval</span><span class="tag">guide</span><span class="tag">energy</span><span class="tag">texas</span><span class="tag">generation</span><span class="tag">certificate</span><span class="tag">power generation</span><span class="tag">generation company</span><span class="tag">company registration</span><span class="tag">inc</span><span class="tag">complaint</span><span class="tag">petition</span><span class="tag">electric</span><span class="tag">llc amend</span><span class="tag">texas inc</span><span class="tag">cy</span><span class="tag">load interconnection</span><span class="tag">utility</span><span class="tag">against</span><span class="tag">operating guide</span><span class="tag">administrative</span><span class="tag">public</span><span class="tag">require</span><span class="tag">generator</span><span class="tag">retail</span><span class="tag">settlement</span><span class="tag">resource entity</span><span class="tag">agreement</span><span class="tag">commission</span><span class="tag">operation</span><span class="tag">amend power</span><span class="tag">distribution</span><span class="tag">reporting</span><span class="tag">clarification</span></p>
+</div></div>
+
+
+</main>
+<script src="site.js?v=202611111454"></script>
+
+</body>
+</html>

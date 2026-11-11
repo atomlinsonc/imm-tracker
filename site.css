@@ -1,0 +1,12 @@
+/* Additions to the tracker's own stylesheet (app.css) for the read-only mirror. */
+header.site .brand { font-size: 20px; line-height: 26px; color: #fff; margin-bottom: 12px; }
+header.site .who { color: #cfd6e4; }
+.wrap { overflow-x: auto; }
+a.idlink { cursor: pointer; }
+tr.detail > td { background: var(--panel) !important; padding: 10px 14px 14px; }
+tr.detail p { margin: 6px 0; max-width: 1000px; }
+tr.detail .kv { max-width: 900px; margin: 8px 0; }
+tr.detail h3 { margin: 10px 0 2px; font-size: 14px; }
+tr.detail ul { margin: 2px 0 0 18px; padding: 0; }
+.cal a[href="#"] { cursor: default; }
+@media (max-width: 800px) { .hide-s { display: none; } header.site .who { display: none; } }
