@@ -27,7 +27,7 @@
 <div class="card login">
   <h1>Sign in</h1>
   <p id="msg" class="intro">Checking that the tracker can be reached.</p>
-  <p id="open" hidden><a class="btn primary" href="https://talked-banana-randy-gordon.trycloudflare.com/login" rel="noopener">Open the tracker</a></p>
+  
   <p class="small muted">The full tracker, where items are assigned and tracked, runs on one computer. It can be reached while that computer is on and awake. These read-only pages are always available.</p>
 </div>
 
@@ -35,14 +35,16 @@
 <script src="site.js?v=202611121230"></script>
 <script>
 (function () {
-  var url = "https://talked-banana-randy-gordon.trycloudflare.com", msg = document.getElementById("msg"), done = false;
+  var url = "", msg = document.getElementById("msg"), done = false;
   function off() {
     if (done) return;
     done = true;
-    msg.textContent = "The tracker cannot be reached right now. The computer that runs it is off, asleep or offline. Try again later.";
+    msg.textContent = "The tracker cannot be reached right now. The computer that runs it is off, asleep or offline, or its web address could not be opened. Try again later.";
     msg.className = "flash alarm";
-    document.getElementById("open").hidden = false;
+    var open = document.getElementById("open");
+    if (open) open.hidden = false;
   }
+  if (!url) return off();
   var timer = setTimeout(off, 8000);
   fetch(url + "/healthz", { cache: "no-store" }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); }).then(function (text) {
     if (done) return;
